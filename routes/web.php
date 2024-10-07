@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Route;
+use App\Models\job;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,55 +14,20 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+ 
 Route::get('/', function () {
     return view('home');
 });
 
-Route::get('/jobs', function () {
+Route::get('/jobs', function ()  {
     return view('jobs', [
-        'jobs' => [
-            [
-                'id'     => '1',
-                'title'  => 'Director',
-                'salary' => '$50,000' 
-            ],
-            [
-                'id'     => '2',
-                'title'  => 'Programmer',
-                'salary' => '$20,000' 
-            ],
-            [
-                'id'     => '3',
-                'title'  => 'Teacher',
-                'salary' => '$34,000' 
-            ]
-        ]
+        'jobs' => job::all()
     ]);
 });
 
-Route::get('/jobs/{id}', function ($id) {
-    $jobs  = [
-                [
-                    'id'     => '1',
-                    'title'  => 'Director',
-                    'salary' => '$50,000' 
-                ],
-                [
-                    'id'     => '2',
-                    'title'  => 'Programmer',
-                    'salary' => '$20,000' 
-                ],
-                [
-                    'id'     => '3',
-                    'title'  => 'Teacher',
-                    'salary' => '$34,000' 
-                ]
-            ];
-        
-    $job = Arr::first($jobs, fn($job) => $job['id'] == $id);
-
-
+Route::get('/jobs/{id}', function ($id)  {        
+    $job = job::find($id);
+    
     return view('job', ['job' => $job]);
 });
 

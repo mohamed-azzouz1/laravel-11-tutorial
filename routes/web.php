@@ -16,7 +16,11 @@ use App\Models\job;
 */
  
 Route::get('/', function () {
-    return view('home');
+    $jobs = job::all();
+
+    dd($jobs);
+
+    // return view('home');
 });
 
 Route::get('/jobs', function ()  {
